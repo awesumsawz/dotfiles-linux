@@ -46,8 +46,9 @@
     pulse.enable = true;
   };
 
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
+  users.defaultUserShell = pkgs.zsh;
   users.users.jbiggs = {
     isNormalUser = true;
     description = "Jason Biggs";
@@ -57,8 +58,13 @@
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  fonts.packages =  with pkgs; [
+    pkgs.nerdfonts
+  ];
 
+  nixpkgs.config.allowUnfree = true;
+  
+  programs.zsh.enable = true;
   programs.firefox.enable = true;
   programs._1password.enable = true;
   programs._1password-gui = {
@@ -76,6 +82,12 @@
     pkgs.stow 
     pkgs.zsh
     pkgs.oh-my-zsh
+    pkgs.fzf
+    pkgs.gh
+    pkgs.starship
+    pkgs.zoxide    
+    pkgs.eza
+    pkgs.zig
   ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
