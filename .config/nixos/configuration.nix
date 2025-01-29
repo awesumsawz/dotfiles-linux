@@ -49,6 +49,8 @@
   services.libinput.enable = true;
 
   users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
+
   users.users.jbiggs = {
     isNormalUser = true;
     description = "Jason Biggs";
@@ -64,19 +66,17 @@
 
   nixpkgs.config.allowUnfree = true;
   
-  programs.zsh = {
-    enable = true;
-    ohMyZsh = {
-      enable = true;
-      plugins = [ 
-        git  
-        zsh-autosuggestions
-        zsh-syntax-highlighting
-        docker
-        docker-compose
-      ];
-    };
-  };
+  # programs.zsh = {
+  #   enable = true;
+  #   
+  #   autosuggestion.enable = true;
+  #   syntaxHighlighting.enable = true;
+  #   history.size = 5000;
+  #   ohMyZsh = {
+  #     enable = true;
+  #     plugins = [ "git" "docker" "docker-compose" ];
+  #   };
+  # };
   programs.firefox.enable = true;
   programs._1password.enable = true;
   programs._1password-gui = {
@@ -89,17 +89,17 @@
     pkgs.ghostty
     pkgs.git
     pkgs.neovim
+    pkgs.vscode
     pkgs._1password-gui
     pkgs._1password-cli
     pkgs.stow 
     pkgs.zsh
-    pkgs.oh-my-zsh
-    pkgs.fzf
-    pkgs.gh
-    pkgs.starship
-    pkgs.zoxide    
-    pkgs.eza
-    pkgs.gcc
+    # pkgs.fzf
+    # pkgs.gh
+    # pkgs.starship
+    # pkgs.zoxide    
+    # pkgs.eza
+    # pkgs.gcc
   ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
