@@ -137,6 +137,7 @@
     hyprpicker
     hyprlandPlugins.hyprgrass
     waypaper
+    brightnessctl
   ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
