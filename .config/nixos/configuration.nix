@@ -46,6 +46,11 @@
     pulse.enable = true;
   };
 
+
+  # -----------------------------------------
+  # system
+  # -----------------------------------------
+
   services.libinput.enable = true;
 
   users.defaultUserShell = pkgs.zsh;
@@ -66,8 +71,15 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
   
+  # -----------------------------------------
+  # programs
+  # -----------------------------------------
+
   programs.hyprland.enable = true;
+
   programs.hyprlock.enable = true;
 
   programs.firefox.enable = true;
@@ -79,52 +91,52 @@
   environment.systemPackages = with pkgs; [
     # basics
     wget
-    pkgs._1password-gui
-    pkgs._1password-cli
-    pkgs.stow 
-    pkgs.zsh
-    pkgs.nodejs
-    pkgs.python3
+    _1password-cli
+    _1password-gui
+    stow 
+    zsh
+    nodejs
+    python3
 
     # terminal
-    pkgs.ghostty
-    pkgs.kitty
-    pkgs.oh-my-zsh
-    pkgs.fzf
-    pkgs.starship
-    pkgs.zoxide    
-    pkgs.eza
+    ghostty
+    kitty
+    oh-my-zsh
+    fzf
+    starship
+    zoxide    
+    eza
 
     # development
-    pkgs.gh
-    pkgs.github-desktop
-    pkgs.git
-    pkgs.vscode
-    pkgs.docker
+    gh
+    github-desktop
+    git
+    vscode
+    docker
 
     # neovim
-    pkgs.neovim
-    pkgs.lazygit
-    pkgs.lazydocker
-    pkgs.ripgrep
-    pkgs.wayclip
+    neovim
+    lazygit
+    lazydocker
+    ripgrep
+    wayclip
     
     # ricing
-    pkgs.hyprland
-    pkgs.hyprlock
-    pkgs.wofi
-    pkgs.waybar
-    pkgs.hyprpaper
-    pkgs.swaynotificationcenter
-    pkgs.hyprshot
-    pkgs.libnotify
-    pkgs.wlogout
-    pkgs.hypridle
-    pkgs.hyprcursor
-    pkgs.hyprsunset
-    pkgs.hyprpicker
-    pkgs.hyprlandPlugins.hyprgrass
-    pkgs.waypaper
+    hyprland
+    hyprlock
+    wofi
+    waybar
+    hyprpaper
+    swaynotificationcenter
+    hyprshot
+    libnotify
+    wlogout
+    hypridle
+    hyprcursor
+    hyprsunset
+    hyprpicker
+    hyprlandPlugins.hyprgrass
+    waypaper
   ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
