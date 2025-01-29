@@ -94,12 +94,13 @@
     pkgs._1password-cli
     pkgs.stow 
     pkgs.zsh
-    # pkgs.fzf
-    # pkgs.gh
-    # pkgs.starship
-    # pkgs.zoxide    
-    # pkgs.eza
-    # pkgs.gcc
+    pkgs.oh-my-zsh
+    pkgs.fzf
+    pkgs.gh
+    pkgs.starship
+    pkgs.zoxide    
+    pkgs.eza
+    pkgs.nodejs_23
   ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
