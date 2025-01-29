@@ -62,22 +62,14 @@
 
   fonts.packages =  with pkgs; [
     pkgs.nerdfonts
+    pkgs.font-awesome
   ];
 
   nixpkgs.config.allowUnfree = true;
   
-  # programs.zsh = {
-  #   enable = true;
-  #   
-  #   autosuggestion.enable = true;
-  #   syntaxHighlighting.enable = true;
-  #   history.size = 5000;
-  #   ohMyZsh = {
-  #     enable = true;
-  #     plugins = [ "git" "docker" "docker-compose" ];
-  #   };
-  # };
   programs.hyprland.enable = true;
+  programs.hyprlock.enable = true;
+
   programs.firefox.enable = true;
   programs._1password.enable = true;
   programs._1password-gui = {
@@ -92,6 +84,7 @@
     pkgs.stow 
     pkgs.zsh
     pkgs.nodejs
+    pkgs.python3
 
     # terminal
     pkgs.ghostty
@@ -101,20 +94,37 @@
     pkgs.starship
     pkgs.zoxide    
     pkgs.eza
-    pkgs.zsh-syntax-highlighting
-    pkgs.zsh-autosuggestions
 
     # development
     pkgs.gh
     pkgs.github-desktop
     pkgs.git
-    pkgs.neovim
     pkgs.vscode
     pkgs.docker
+
+    # neovim
+    pkgs.neovim
+    pkgs.lazygit
+    pkgs.lazydocker
+    pkgs.ripgrep
+    pkgs.wayclip
     
-    # extras
+    # ricing
     pkgs.hyprland
     pkgs.hyprlock
+    pkgs.wofi
+    pkgs.waybar
+    pkgs.hyprpaper
+    pkgs.swaync
+    pkgs.hyprshot
+    pkgs.libnotify
+    pkgs.wlogout
+    pkgs.hypridle
+    pkgs.hyprcursor
+    pkgs.hyprsunset
+    pkgs.hyprpicker
+    pkgs.hyprgrass
+    pkgs.waypaper
   ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
