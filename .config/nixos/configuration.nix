@@ -120,6 +120,7 @@
     lazydocker
     ripgrep
     wayclip
+    vimPlugins.nvim-treesitter
     
     # ricing
     hyprland
