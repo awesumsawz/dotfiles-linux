@@ -123,7 +123,7 @@
     pkgs.hyprcursor
     pkgs.hyprsunset
     pkgs.hyprpicker
-    pkgs.hyprgrass
+    pkgs.hyprlandPlugins.hyprgrass
     pkgs.waypaper
   ];
 
