@@ -115,7 +115,7 @@
     pkgs.wofi
     pkgs.waybar
     pkgs.hyprpaper
-    pkgs.swaync
+    pkgs.swaynotificationcenter
     pkgs.hyprshot
     pkgs.libnotify
     pkgs.wlogout
