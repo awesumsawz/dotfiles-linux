@@ -99,7 +99,7 @@
     pkgs.starship
     pkgs.zoxide    
     pkgs.eza
-    pkgs.zig
+    pkgs.gcc
   ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
