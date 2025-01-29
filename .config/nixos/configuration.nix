@@ -77,6 +77,7 @@
   #     plugins = [ "git" "docker" "docker-compose" ];
   #   };
   # };
+  programs.hyprland.enable = true;
   programs.firefox.enable = true;
   programs._1password.enable = true;
   programs._1password-gui = {
@@ -84,23 +85,36 @@
     polkitPolicyOwners = [ "jbiggs" ];
   };
   environment.systemPackages = with pkgs; [
+    # basics
     wget
-    pkgs.github-desktop
-    pkgs.ghostty
-    pkgs.git
-    pkgs.neovim
-    pkgs.vscode
     pkgs._1password-gui
     pkgs._1password-cli
     pkgs.stow 
     pkgs.zsh
+    pkgs.nodejs
+
+    # terminal
+    pkgs.ghostty
+    pkgs.kitty
     pkgs.oh-my-zsh
     pkgs.fzf
-    pkgs.gh
     pkgs.starship
     pkgs.zoxide    
     pkgs.eza
-    pkgs.nodejs_23
+    pkgs.zsh-syntax-highlighting
+    pkgs.zsh-autosuggestions
+
+    # development
+    pkgs.gh
+    pkgs.github-desktop
+    pkgs.git
+    pkgs.neovim
+    pkgs.vscode
+    pkgs.docker
+    
+    # extras
+    pkgs.hyprland
+    pkgs.hyprlock
   ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
