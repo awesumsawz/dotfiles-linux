@@ -64,7 +64,19 @@
 
   nixpkgs.config.allowUnfree = true;
   
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    ohMyZsh = {
+      enable = true;
+      plugins = [ 
+        git  
+        zsh-autosuggestions
+        zsh-syntax-highlighting
+        docker
+        docker-compose
+      ];
+    };
+  };
   programs.firefox.enable = true;
   programs._1password.enable = true;
   programs._1password-gui = {
