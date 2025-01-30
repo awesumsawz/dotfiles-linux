@@ -1,22 +1,40 @@
 { config, lib, pkgs, ... }:
 let
+  # ARCHITECTURE CONFIGS
   arch = builtins.currentSystem;
   hardwareConfig = if arch == "x86_64-linux" then
     ./hardware-configuration__x86_64.nix
   else 
     ./hardware-configuration__aarch64.nix;
+
+  # HOST CONFIGS
+  hostname = config.networking.hostName;
+  hostSpecificConfig = if hostname == "rogue" then
+    ./host__rogue.nix
+  else if hostname == "hunter" then
+    ./host__hunter.nix
+  else
+    ./host__knight.nix;
+  
+  # CHECK HOST LOCAL
+  hostLocalConfig = ./host__local.nix;
+  hostLocalExists = builtins.pathExists hostLocalConfig;
 in
 
+if !hostLocalExists then
+  throw "Error: host__local.nix not found. Please create it and set your hostname."
+else
 {
   imports =
     [ 
       hardwareConfig
+      hostLocalConfig
+      hostSpecificConfig
     ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "rogue"; # Define your hostname.
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/Chicago";
