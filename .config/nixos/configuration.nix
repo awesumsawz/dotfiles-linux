@@ -1,8 +1,16 @@
 { config, lib, pkgs, ... }:
+let
+  arch = builtins.currentSystem;
+  hardwareConfig = if arch == "x86_64-linux" then
+    ./hardware-configuration__x86_64.nix
+  else 
+    ./hardware-configuration__aarch64.nix;
+in
+
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [ 
+      hardwareConfig
     ];
 
   boot.loader.systemd-boot.enable = true;
