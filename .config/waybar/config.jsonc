@@ -12,7 +12,7 @@
 		"cpu", 
 		"memory", 
 		"tray",
-		"custom/power",	
+		"battery",	
 		"clock"
 	],
 	// Modules configuration
@@ -24,8 +24,8 @@
 		"format-icons": {
 			"urgent": "",
 			"active": "",
-			"default": "",
-		},
+			"default": ""
+		}
 	},
 	"pulseaudio": {
 		"tooltip": false,
@@ -47,5 +47,37 @@
 	"memory": {
 		"tooltip": false,
 		"format": "MEM {}%"
+	},
+	"battery": {
+		"states": {
+      		// "good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{capacity}% {icon}",
+		"format-full": "{capacity}% {icon} ",
+		"format-charging": "{capacity}%  ",
+		"format-plugged": "{capacity}%  ",
+		"format-alt": "{time} {icon}",
+		// "format-good": "", // An empty format will hide the module
+		// "format-full": "",
+		"format-icons": [
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"power-profiles-daemon": {
+		"format": "{icon}",
+		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+		"tooltip": true,
+		"format-icons": {
+			"default": "",
+			"performance": "",
+			"balanced": "",
+			"power-saver": ""
+		}
 	}
 }
