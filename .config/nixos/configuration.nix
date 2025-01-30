@@ -3,28 +3,28 @@ let
   # ARCHITECTURE CONFIGS
   arch = builtins.currentSystem;
   hardwareConfig = if arch == "x86_64-linux" then
-    ./hardware-configuration__x86_64.nix
+    ./hardware-configs/hardware-configuration__x86_64.nix
   else 
-    ./hardware-configuration__aarch64.nix;
+    ./hardware-configs/hardware-configuration__aarch64.nix;
 
   # CHECK HOST LOCAL
-  hostLocalConfig = ./host__local.nix;
+  hostLocalConfig = ./host-configs/host__local.nix;
   hostLocalExists = builtins.pathExists hostLocalConfig;
 
   # HOST CONFIGS
   hostname = if hostLocalExists then (import hostLocalConfig).networking.hostName else null;
   hostSpecificConfig = if hostname == "rogue" then
-    ./host__rogue.nix
+    ./host-configs/host__rogue.nix
   else if hostname == "hunter" then
-    ./host__hunter.nix
+    ./host-configs/host__hunter.nix
   else if hostname == "knight" then
-    ./host__knight.nix
+    ./host-configs/host__knight.nix
   else
     null;
 in
 
 if !hostLocalExists then
-  throw "Error: host__local.nix not found. Please create it and set your hostname."
+  throw "Error: ~/.config/nixos/host-configs/host__local.nix not found. Please create it and set your hostname."
 else if hostSpecificConfig == null then
   throw "Error: Unknown hostname. Please set a valid hostname in host__local.nix."
 else
