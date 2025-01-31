@@ -161,8 +161,7 @@ else
     wofi
     waybar
     hyprpaper
-    # swaynotificationcenter
-    hyprnotify
+    swaynotificationcenter
     hyprshot
     libnotify
     wlogout
