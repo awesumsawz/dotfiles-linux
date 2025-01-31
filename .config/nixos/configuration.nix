@@ -108,10 +108,13 @@ else
   # programs
   # -----------------------------------------
 
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = ["jbiggs"];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+
   programs.hyprland.enable = true;
-
   programs.hyprlock.enable = true;
-
   programs.firefox.enable = true;
   programs._1password.enable = true;
   programs._1password-gui = {
