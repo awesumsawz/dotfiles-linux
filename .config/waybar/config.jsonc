@@ -1,17 +1,17 @@
 {
 	"layer": "top",
 	"modules-left": [
-		"hyprland/workspaces"
+        "tray"
 	],
 	"modules-center": [
-		"hyprland/window"
+		"hyprland/workspaces"
 	],
 	"modules-right": [
-		"network", 
+		"spacer-r",
+        "network", 
 		"pulseaudio", 
 		"cpu", 
 		"memory", 
-		"tray",
 		"battery",	
 		"clock"
 	],
@@ -20,64 +20,47 @@
 		"disable-scroll": true,
 		"all-outputs": true,
 		"warp-on-scroll": false,
-		"format": "{name}: {icon}",
+		"format": "{name}",
 		"format-icons": {
 			"urgent": "",
-			"active": "",
+            "active": "",
 			"default": ""
-		}
-	},
-	"pulseaudio": {
-		"tooltip": false,
-		"scroll-step": 5,
-		"format": "VOL {volume}%",
-		"format-icons": {
-			"default": ["奄", "奔", "墳"]
 		}
 	},
 	"network": {
 		"tooltip": false,
-		"format-wifi": "   {essid}",
-		"format-ethernet": "  {ipaddr}"
+		"format-wifi": "\udb81\udda9 {essid}",
+		"format-ethernet": "\udb80\ude00 {ipaddr}"
+	},
+	"pulseaudio": {
+		"tooltip": false,
+		"scroll-step": 5,
+		"format": "\udb81\udd7e {volume}%",
 	},
 	"cpu": {
 		"tooltip": false,
-		"format": "CPU {}%"
+		"format": "\uf4bc {}%"
 	},
 	"memory": {
 		"tooltip": false,
-		"format": "MEM {}%"
+		"format": "\uefc5 {}%"
 	},
 	"battery": {
 		"states": {
-      		// "good": 95,
 			"warning": 30,
 			"critical": 15
 		},
-		"format": "{capacity}% {icon}",
-		"format-full": "{capacity}% {icon} ",
-		"format-charging": "{capacity}%  ",
-		"format-plugged": "{capacity}%  ",
+		"format": "{icon} {capacity}%",
+		"format-full": "{icon} {capacity}%",
+		"format-charging": "\udb80\udc84 {capacity}%",
+		"format-plugged": "\ueb2d {capacity}%",
 		"format-alt": "{time} {icon}",
-		// "format-good": "", // An empty format will hide the module
-		// "format-full": "",
 		"format-icons": [
-			"",
-			"",
-			"",
-			"",
-			""
+			"\udb80\udc7a",
+			"\udb80\udc7c",
+			"\udb80\udc7e",
+			"\udb80\udc80",
+			"\udb80\udc79"
 		]
-	},
-	"power-profiles-daemon": {
-		"format": "{icon}",
-		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-		"tooltip": true,
-		"format-icons": {
-			"default": "",
-			"performance": "",
-			"balanced": "",
-			"power-saver": ""
-		}
 	}
 }
