@@ -1,0 +1,83 @@
+{
+	"layer": "top",
+	"modules-left": [
+		"hyprland/workspaces"
+	],
+	"modules-center": [
+		"hyprland/window"
+	],
+	"modules-right": [
+		"network", 
+		"pulseaudio", 
+		"cpu", 
+		"memory", 
+		"tray",
+		"battery",	
+		"clock"
+	],
+	// Modules configuration
+	"hyprland/workspaces": {
+		"disable-scroll": true,
+		"all-outputs": true,
+		"warp-on-scroll": false,
+		"format": "{name}: {icon}",
+		"format-icons": {
+			"urgent": "",
+			"active": "",
+			"default": ""
+		}
+	},
+	"pulseaudio": {
+		"tooltip": false,
+		"scroll-step": 5,
+		"format": "VOL \udb81\udd7e {volume}%",
+		"format-icons": {
+			"default": ["\udb81\udd7e", "奔", "墳"]
+		}
+	},
+	"network": {
+		"tooltip": false,
+		"format-wifi": "   {essid}",
+		"format-ethernet": "  {ipaddr}"
+	},
+	"cpu": {
+		"tooltip": false,
+		"format": "CPU {}%"
+	},
+	"memory": {
+		"tooltip": false,
+		"format": "MEM {}%"
+	},
+	"battery": {
+		"states": {
+      		// "good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{capacity}% {icon}",
+		"format-full": "{capacity}% {icon} ",
+		"format-charging": "{capacity}%  ",
+		"format-plugged": "{capacity}%  ",
+		"format-alt": "{time} {icon}",
+		// "format-good": "", // An empty format will hide the module
+		// "format-full": "",
+		"format-icons": [
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"power-profiles-daemon": {
+		"format": "{icon}",
+		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+		"tooltip": true,
+		"format-icons": {
+			"default": "",
+			"performance": "",
+			"balanced": "",
+			"power-saver": ""
+		}
+	}
+}
