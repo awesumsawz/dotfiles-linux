@@ -9,11 +9,10 @@ $green: #50FA7B;
 $pink: #FF79C6;
 $purple: #BD93F9;
 $inactivePurple: rgba(189, 147, 249, 0.5);
-$activePurple: #8466AD;
+$activePurple: RGB(189, 147, 249);
 $red: #FF5555;
 $yellow: #F1FA8C;
 $borderRadius: 50px;
-
 
 * {
   border: none;
@@ -23,6 +22,10 @@ $borderRadius: 50px;
   margin: 0;
 }
 
+window#waybar > box {
+  margin-top: 5px;
+}
+
 box.modules-right,
 box.modules-left {
   font-size: 14px;
@@ -30,33 +33,10 @@ box.modules-left {
 
 window#waybar {
   background: transparent;
-  margin-top: 5px;
   &.hidden {
     opacity: 0.2;
   }
 }
-
-// #window {
-//   margin-top: 8px;
-//   padding-left: 16px;
-//   padding-right: 16px;
-//   border-radius: 26px;
-//   transition: none;
-//   color: transparent;
-//   background: $green;
-// }
-
-// window#waybar {
-//   &.termite,
-//   &.Firefox,
-//   &.Navigator,
-//   &.PCSX2 {
-//     #window {
-//       color: $darkGray;
-//       background: $midGray;
-//     }
-//   }
-// }
 
 #workspaces {
   margin: 0 10px;
@@ -66,16 +46,18 @@ window#waybar {
   transition: none;
   button {
     transition: all 0.5s ease;
-    color: $white;
+    color: $darkGray;
     background: $inactivePurple;
     font-size: 10px;
     border-radius: $borderRadius;
     padding: 0 15px;
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
     &.active {
       transition: all 0.5s ease;
       background-color: $purple;
       padding: 0 30px;
-      color: $darkGray
     }
     &.focused {
       transition: all 0.5s ease;
@@ -90,6 +72,19 @@ window#waybar {
   }
 }
 
+#tray {
+  margin: 0 5px;
+  background-color: $darkGray;
+  border-radius: $borderRadius;
+  padding: 0 5px;
+  min-width: 50px;
+  widget {
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
+}
+
 #mpd,
 #network,
 #pulseaudio,
@@ -98,16 +93,12 @@ window#waybar {
 #memory,
 #battery,
 #clock {
-  /* margin: 8px 4px 0; */
-  /* padding: 4px 16px 0; */
+  margin-right: 5px;
+  padding: 0 15px;
   border-radius: $borderRadius;
   transition: none;
   background-color: $darkGray;
   font-weight: 400;
-}
-
-#tray {
-  background-color: $green;
 }
 
 #mpd {
