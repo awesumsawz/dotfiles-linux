@@ -1,0 +1,139 @@
+$black: #000000;
+$darkGray: #282A36;
+$midGray: #44475A;
+$white: #F8F8F2;
+$blueGray: #6272A4;
+$cyan: #8BE9FD;
+$orange: #FFB86C;
+$green: #50FA7B;
+$pink: #FF79C6;
+$purple: #BD93F9;
+$inactivePurple: rgba(189, 147, 249, 0.5);
+$activePurple: RGB(189, 147, 249);
+$red: #FF5555;
+$yellow: #F1FA8C;
+$borderRadius: 50px;
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: BigBlueTermPlus Nerd Font;
+  padding: 0;
+  margin: 0;
+}
+
+window#waybar > box {
+  margin-top: 5px;
+}
+
+box.modules-right,
+box.modules-left {
+  font-size: 14px;
+}
+
+window#waybar {
+  background: transparent;
+  &.hidden {
+    opacity: 0.2;
+  }
+}
+
+#workspaces {
+  margin: 0 10px;
+  padding: 5px;
+  border-radius: $borderRadius;
+  background: $darkGray;
+  transition: none;
+  button {
+    transition: all 0.5s ease;
+    color: $darkGray;
+    background: $inactivePurple;
+    font-size: 10px;
+    border-radius: $borderRadius;
+    padding: 0 15px;
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+    &.active {
+      transition: all 0.5s ease;
+      background-color: $purple;
+      padding: 0 30px;
+    }
+    &.focused {
+      transition: all 0.5s ease;
+      background-color: $green;
+    }
+    &:hover {
+      transition: all 0.5s ease;
+      box-shadow: inherit;
+      text-shadow: inherit;
+      background-color: $pink;
+    }
+  }
+}
+
+#tray {
+  margin: 0 5px;
+  background-color: $darkGray;
+  border-radius: $borderRadius;
+  padding: 0 5px;
+  min-width: 50px;
+  widget {
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
+}
+
+#mpd,
+#network,
+#pulseaudio,
+#temperature,
+#cpu,
+#memory,
+#battery,
+#clock {
+  margin-right: 5px;
+  padding: 0 15px;
+  border-radius: $borderRadius;
+  transition: none;
+  background-color: $darkGray;
+  font-weight: 400;
+}
+
+#mpd {
+  color: $purple;
+  &.disconnected,
+  &.stopped {
+    color: $black;
+    background: $red;
+  }
+}
+
+#network {
+  color: $purple;
+}
+
+#pulseaudio {
+  color: $cyan;
+}
+
+#temperature {
+  color: $orange;
+}
+
+#cpu {
+  color: $yellow;
+}
+
+#memory {
+  color: $green;
+}
+
+#battery {
+  color: $pink;
+}
+
+#clock {
+  color: $white;
+}

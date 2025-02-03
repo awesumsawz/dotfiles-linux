@@ -1,0 +1,132 @@
+$black: #000000;
+$darkGray: #282A36;
+$midGray: #44475A;
+$white: #F8F8F2;
+$blueGray: #6272A4;
+$cyan: #8BE9FD;
+$orange: #FFB86C;
+$green: #50FA7B;
+$pink: #FF79C6;
+$purple: #BD93F9;
+$red: #FF5555;
+$yellow: #F1FA8C;
+
+* {
+  border: none;
+  border-radius: 0;
+  /* font-family: SpaceMono Nerd Font; */
+  font-family: BigBlueTermPlus Nerd Font;
+  font-weight: 900;
+  font-size: 14px;
+  min-height: 24px;
+}
+
+window#waybar {
+  background: transparent;
+  &.hidden {
+    opacity: 0.2;
+  }
+}
+
+#window {
+  margin-top: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 26px;
+  transition: none;
+  color: transparent;
+  background: transparent;
+}
+
+window#waybar {
+  &.termite,
+  &.Firefox,
+  &.Navigator,
+  &.PCSX2 {
+    #window {
+      color: $darkGray;
+      background: $midGray;
+    }
+  }
+}
+
+#workspaces {
+  margin-top: 8px;
+  margin-left: 12px;
+  margin-bottom: 0;
+  padding-left: 6px;
+  padding-right: 12px;
+  border-radius: 26px;
+  background: #282a36;
+  transition: none;
+  button {
+    transition: none;
+    color: #f8f8f2;
+    background: transparent;
+    font-size: 16px;
+    &.focused {
+      color: #9aedfe;
+    }
+    &:hover {
+      transition: none;
+      box-shadow: inherit;
+      text-shadow: inherit;
+      color: #ff79c6;
+    }
+  }
+}
+
+#mpd,
+#network,
+#pulseaudio,
+#temperature,
+#cpu,
+#memory,
+#battery,
+#clock {
+  margin: 8px 4px 0;
+  padding: 4px 16px 0;
+  border-radius: 50px;
+  transition: none;
+  color: $black;
+  font-weight: 400;
+}
+
+
+#mpd {
+  background: $purple;
+  &.disconnected,
+  &.stopped {
+    color: $white;
+    background: $red;
+  }
+}
+
+#network {
+  background: $purple;
+}
+
+#pulseaudio {
+  background: $cyan;
+}
+
+#temperature {
+  background: $orange;
+}
+
+#cpu {
+  background: $yellow;
+}
+
+#memory {
+  background: $green;
+}
+
+#battery {
+  background: $pink;
+}
+
+#clock {
+  color: $white;
+  background: $darkGray;
+}
