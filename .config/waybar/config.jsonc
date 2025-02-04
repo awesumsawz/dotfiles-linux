@@ -1,13 +1,14 @@
 {
 	"layer": "top",
 	"modules-left": [
-        "tray"
+        "custom/exit",
+        "wlr/taskbar",
+        "tray",
 	],
 	"modules-center": [
 		"hyprland/workspaces"
 	],
 	"modules-right": [
-		"spacer-r",
         "network", 
 		"pulseaudio", 
 		"cpu", 
@@ -16,6 +17,11 @@
 		"clock"
 	],
 	// Modules configuration
+    "custom/exit": {
+        "format": "\udb81\udc25",
+        "on-click": "wlogout",
+        "tooltip": false
+    },
 	"hyprland/workspaces": {
 		"disable-scroll": true,
 		"all-outputs": true,
@@ -27,10 +33,20 @@
 			"default": ""
 		}
 	},
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "icon-size": 18,
+        "tooltip": true,
+        "tooltip-format": "{title}",
+        "cursor": false
+    },
 	"network": {
-		"tooltip": false,
-		"format-wifi": "\udb81\udda9 {essid}",
-		"format-ethernet": "\udb80\ude00 {ipaddr}"
+		"tooltip": true,
+        "tooltip-format-wifi": "{essid} - {ipaddr}",
+        "tooltip-format-ethernet": "{ipaddr}",
+		"format-wifi": "\udb81\udda9",
+		"format-ethernet": "\udb80\ude00"
 	},
 	"pulseaudio": {
 		"tooltip": false,
@@ -54,7 +70,7 @@
 		"format-full": "{icon} {capacity}%",
 		"format-charging": "\udb80\udc84 {capacity}%",
 		"format-plugged": "\ueb2d {capacity}%",
-		"format-alt": "{time} {icon}",
+		"format-alt": "{icon} {time}",
 		"format-icons": [
 			"\udb80\udc7a",
 			"\udb80\udc7c",
@@ -62,5 +78,11 @@
 			"\udb80\udc80",
 			"\udb80\udc79"
 		]
-	}
+	},
+    "clock": {
+        "interval": 60,
+        "tooltip": true,
+        "format": "{:%H:%M}",
+        "tooltip-format": "{:%m-%d-%Y}",
+    }
 }

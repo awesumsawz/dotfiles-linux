@@ -28,7 +28,7 @@ window#waybar > box {
 
 box.modules-right,
 box.modules-left {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 window#waybar {
@@ -46,18 +46,19 @@ window#waybar {
   transition: none;
   button {
     transition: all 0.5s ease;
-    color: $darkGray;
+    color: $purple;
     background: $inactivePurple;
     font-size: 10px;
     border-radius: $borderRadius;
-    padding: 0 15px;
+    padding: 0 10px;
     &:not(:last-child) {
       margin-right: 5px;
     }
     &.active {
       transition: all 0.5s ease;
       background-color: $purple;
-      padding: 0 30px;
+      color: $darkGray;
+      padding: 0 20px;
     }
     &.focused {
       transition: all 0.5s ease;
@@ -68,6 +69,7 @@ window#waybar {
       box-shadow: inherit;
       text-shadow: inherit;
       background-color: $pink;
+      color: $darkGray;
     }
   }
 }
@@ -85,6 +87,20 @@ window#waybar {
   }
 }
 
+#taskbar {
+  &:hover {
+  }
+  button {
+    margin: 0 5px;
+    font-size: 12px;
+    &:hover {
+      background-color: inherit;
+    }
+  }
+}
+
+#custom-exit,
+#taskbar,
 #mpd,
 #network,
 #pulseaudio,
@@ -101,12 +117,15 @@ window#waybar {
   font-weight: 400;
 }
 
-#mpd {
-  color: $purple;
-  &.disconnected,
-  &.stopped {
+#custom-exit {
+  margin-left: 5px;
+  font-size: 20px;
+  color: $white;
+  background-color: $darkGray;
+  transition: all 0.5s ease;
+  &:hover {
+    background-color: $pink;
     color: $black;
-    background: $red;
   }
 }
 
