@@ -5,9 +5,10 @@ export GTK_THEME=Dracula
 export XDG_CURRENT_DESKTOP=GNOME
 export XDG_SESSION_TYPE=wayland
 
-case "$(hostname)" in
+case "$(cat /etc/hostname)" in
     "hunter")
         export HYPRIDLE_CONFIG="$HOME/.config/hypr/hypridle-hunter.conf"
+        echo "hunter"
         ;;
     *)
         export HYPRIDLE_CONFIG="$HOME/.config/hypr/hypridle.conf"
