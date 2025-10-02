@@ -9,11 +9,12 @@
 		"hyprland/workspaces"
 	],
 	"modules-right": [
-        "network", 
-		"pulseaudio", 
-		"cpu", 
-		"memory", 
-		"battery",	
+        "network",
+		"bluetooth",
+		"pulseaudio",
+		"cpu",
+		"memory",
+		"battery",
 		"clock"
 	],
 	// Modules configuration
@@ -47,6 +48,15 @@
         "tooltip-format-ethernet": "{ipaddr}",
 		"format-wifi": "\udb81\udda9",
 		"format-ethernet": "\udb80\ude00"
+	},
+	"bluetooth": {
+		"format": "\udb80\udc0e",
+		"format-disabled": "\udb80\udc0e",
+		"format-connected": "\udb80\udc0e {num_connections}",
+		"tooltip-format": "{controller_alias}\t{controller_address}",
+		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+		"on-click": "blueman-manager"
 	},
 	"pulseaudio": {
 		"tooltip": false,
