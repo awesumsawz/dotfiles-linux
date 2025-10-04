@@ -50,10 +50,12 @@
 		"format-ethernet": "\udb80\ude00"
 	},
 	"bluetooth": {
-		"format": "\udb80\udc0e",
+		"format": "\udb80\udc0e {status}",
 		"format-disabled": "\udb80\udc0e",
+		"format-off": "\udb80\udc0e",
+		"format-on": "\udb80\udc0e",
 		"format-connected": "\udb80\udc0e {num_connections}",
-		"tooltip-format": "{controller_alias}\t{controller_address}",
+		"tooltip-format": "{status}",
 		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
 		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
 		"on-click": "blueman-manager"

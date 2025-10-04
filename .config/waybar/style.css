@@ -81,6 +81,7 @@ window#waybar.hidden {
 #taskbar,
 #mpd,
 #network,
+#bluetooth,
 #pulseaudio,
 #temperature,
 #cpu,
@@ -109,6 +110,10 @@ window#waybar.hidden {
 
 #network {
   color: #BD93F9;
+}
+
+#bluetooth {
+  color: #8BE9FD;
 }
 
 #pulseaudio {
