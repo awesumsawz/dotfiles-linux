@@ -46,9 +46,9 @@
 - **networkmanager** - Network manager
 - **iwd** - Wireless daemon
 - **kanata** - Keyboard remapper
-- **brightnessctl** - Brightness control (referenced in config)
-- **playerctl** - Media player controller (referenced in config)
-- **hyprshot** - Screenshot tool (referenced in config)
+- **brightnessctl** - Brightness control
+- **playerctl** - Media player controller
+- **hyprshot** - Screenshot tool
 
 ## Audio
 - **pipewire** - Audio server
