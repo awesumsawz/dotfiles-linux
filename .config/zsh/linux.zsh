@@ -1,4 +1,4 @@
-export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+export DOCKER_HOST=$HOME/.docker/desktop/docker.sock
 export PATH="$HOME/.local/bin:/usr/bin:$PATH"
 alias nrs="home-manager switch --flake $HOME/nix-arch#rogue"
 alias logout="hyprctl dispatch exit"
