@@ -5,6 +5,7 @@ alias logout="hyprctl dispatch exit"
 export GTK_THEME=Dracula
 export XDG_CURRENT_DESKTOP=GNOME
 export XDG_SESSION_TYPE=wayland
+export TERMINAL=ghostty
 
 case "$(cat /etc/hostname)" in
     "hunter")
