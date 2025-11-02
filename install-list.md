@@ -15,6 +15,7 @@
 - **limine-snapper-sync** - Sync Limine with Snapper snapshots
 - **snapper** - Filesystem snapshot management
 - **plymouth** - Graphical boot splash screen
+- **sddm** - Simple Desktop Display Manager
 - **systemd** utilities via base
 
 ## Terminal & Shell
@@ -71,7 +72,7 @@
 - **python-poetry-core** - Python packaging utilities
 - **luarocks** - Lua package manager
 - **tree-sitter-cli** - Parser generator tool
-- **omarchy-lazyvim** - Custom LazyVim configuration
+- **omarchy-nvim** - Custom Neovim configuration
 
 ## Hyprland Ecosystem
 - **hyprland** - Dynamic tiling Wayland compositor
@@ -82,13 +83,30 @@
 - **hyprshot** - Screenshot utility
 - **hyprsunset** - Blue light filter
 - **waybar** - Customizable status bar
-- **walker-bin** - Application launcher
+- **walker** - Application launcher
 - **swaybg** - Wallpaper manager
 - **swayosd** - On-screen display for keys
 - **mako** - Notification daemon
 - **xdg-desktop-portal-hyprland** - Desktop portal for Hyprland
 - **xdg-desktop-portal-gtk** - GTK desktop portal backend
 - **uwsm** - Universal Wayland session manager
+- **wayfreeze-git** - Freezes Wayland screen for screenshots
+
+## Elephant Launcher Modules
+- **aether** - Application launcher framework
+- **elephant** - Core launcher package
+- **elephant-bluetooth** - Bluetooth management module
+- **elephant-calc** - Calculator module
+- **elephant-clipboard** - Clipboard manager module
+- **elephant-desktopapplications** - Desktop applications launcher
+- **elephant-files** - File browser module
+- **elephant-menus** - Menu system module
+- **elephant-providerlist** - Provider list module
+- **elephant-runner** - Command runner module
+- **elephant-symbols** - Symbol picker module
+- **elephant-todo** - Todo list module
+- **elephant-unicode** - Unicode character picker
+- **elephant-websearch** - Web search module
 
 ## System Utilities
 - **brightnessctl** - Brightness control tool
@@ -108,6 +126,7 @@
 - **wireless-regdb** - Wireless regulatory database
 - **gvfs-smb** - SMB/CIFS support for GVFS
 - **gvfs-mtp** - MTP support for GVFS
+- **gvfs-nfs** - NFS support for GVFS
 - **nss-mdns** - NSS module for mDNS
 
 ## Bluetooth & Audio
@@ -161,8 +180,7 @@
 - **mpv** - Media player
 - **kdenlive** - Video editor
 - **obs-studio** - Screen recording and streaming
-- **wf-recorder** - Wayland screen recorder
-- **wl-screenrec** - Wayland screen recorder
+- **gpu-screen-recorder** - GPU-accelerated screen recorder
 - **satty** - Screenshot annotation tool
 - **slurp** - Screen area selector for Wayland
 - **ffmpegthumbnailer** - Video thumbnail generator
@@ -176,10 +194,10 @@
 ## Applications - Entertainment
 - **spotify** - Music streaming client
 - **steam** - Gaming platform
+- **impala** - Audio player
 
 ## Applications - Utilities
 - **filebot** - Media file organizer
-- **impala** - Audio player
 
 ## Package Managers
 - **yay** - AUR helper
