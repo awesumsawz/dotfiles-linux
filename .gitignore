@@ -1,2 +1,3 @@
 **/host__local.nix
 .config/nixos/host-configs/host__local.nix
+/.claude/skills/flac-library-audit/state
