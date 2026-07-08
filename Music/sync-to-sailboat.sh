@@ -51,6 +51,7 @@ fi
 # Note: we deliberately do NOT use -a (archive). The SAILBOAT volume is exFAT
 # and does not store Unix permissions or ownership, so preserving them
 # only produces errors.
+WARNINGS=0
 for LIB in "${LIBRARIES[@]}"; do
     SRC="$HOME/Music/$LIB"
     DEST="$DEST_ROOT/$LIB"
@@ -59,6 +60,7 @@ for LIB in "${LIBRARIES[@]}"; do
     echo ">>> Syncing '$LIB'..."
     mkdir -p "$DEST"
 
+    rc=0
     rsync -rtvh --progress \
         --ignore-existing \
         --modify-window=2 \
@@ -66,8 +68,25 @@ for LIB in "${LIBRARIES[@]}"; do
         --exclude='._*' \
         --exclude='.Trash-*' \
         $DRY_RUN \
-        "$SRC"/ "$DEST"/
+        "$SRC"/ "$DEST"/ || rc=$?
+
+    # Exit code 23 = "some files could not be transferred" (e.g. names containing
+    # characters exFAT forbids, like " or ?). Warn but keep syncing the remaining
+    # libraries instead of aborting the whole run.
+    if [[ $rc -eq 23 ]]; then
+        echo "WARNING: some files in '$LIB' could not be copied (see rsync errors above)." >&2
+        WARNINGS=1
+    elif [[ $rc -ne 0 ]]; then
+        echo "ERROR: rsync failed for '$LIB' (exit code $rc)." >&2
+        exit "$rc"
+    fi
 done
 
 echo
-echo ">>> Done. Existing SAILBOAT files were left untouched; only new files were copied."
+if [[ $WARNINGS -ne 0 ]]; then
+    echo ">>> Done, but some files were skipped due to errors (likely characters exFAT"
+    echo ">>> does not allow in filenames, such as \" ? : * < > |). Rename those files"
+    echo ">>> in the source library and re-run to include them."
+else
+    echo ">>> Done. Existing SAILBOAT files were left untouched; only new files were copied."
+fi
