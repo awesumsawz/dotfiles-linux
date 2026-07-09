@@ -21,6 +21,7 @@ _darcs
 ^/README.*
 ^/LICENSE.*
 ^/COPYING
+^/install-list\.md
 
 \.gitlab-ci\.yml
 \.DS_Store
