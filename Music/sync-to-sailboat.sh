@@ -2,7 +2,7 @@
 #
 # sync-to-sailboat.sh
 #
-# Copies NEW files and directories from the "Jason Library - CDs" and
+# Copies NEW files and directories from the "jason-library" and
 # "Library" folders to the attached "SAILBOAT" drive's Music folder. Files
 # that already exist on the drive are left exactly as they are — nothing is
 # overwritten and no duplicates are created. The source libraries are never
@@ -14,7 +14,7 @@
 #
 set -euo pipefail
 
-LIBRARIES=("Jason Library - CDs" "Library")
+LIBRARIES=("jason-library" "Library")
 DEST_ROOT="/run/media/$USER/SAILBOAT/Music"
 
 DRY_RUN=""

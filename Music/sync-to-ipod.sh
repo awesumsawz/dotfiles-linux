@@ -2,8 +2,9 @@
 #
 # sync-to-ipod.sh
 #
-# Copies NEW files and directories from the "Jason Library - CDs" folder to the
-# attached iPod's Music folder. Files that already exist on the iPod are left
+# Copies NEW files and directories from the "jason-library" and "Library"
+# folders to matching subfolders of the attached iPod's Music folder
+# (Music/jason-library, Music/Library). Files that already exist on the iPod are left
 # exactly as they are — nothing is overwritten and no duplicates are created.
 # The source library is never modified.
 #
@@ -13,7 +14,10 @@
 #
 set -euo pipefail
 
-SRC="$HOME/Music/Jason Library - CDs"
+SRCS=(
+    "$HOME/Music/jason-library"
+    "$HOME/Music/Library"
+)
 DEST="/run/media/$USER/IPOD/Music"
 
 DRY_RUN=""
@@ -23,18 +27,18 @@ if [[ "${1:-}" == "--dry-run" || "${1:-}" == "-n" ]]; then
 fi
 
 # --- Sanity checks -----------------------------------------------------------
-if [[ ! -d "$SRC" ]]; then
-    echo "ERROR: source folder not found: $SRC" >&2
-    exit 1
-fi
+for SRC in "${SRCS[@]}"; do
+    if [[ ! -d "$SRC" ]]; then
+        echo "ERROR: source folder not found: $SRC" >&2
+        exit 1
+    fi
+done
 
 if ! mountpoint -q "/run/media/$USER/IPOD"; then
     echo "ERROR: iPod does not appear to be mounted at /run/media/$USER/IPOD" >&2
     echo "       Plug it in / mount it and try again." >&2
     exit 1
 fi
-
-mkdir -p "$DEST"
 
 # --- Sync --------------------------------------------------------------------
 # -r  recurse into directories
@@ -50,14 +54,19 @@ mkdir -p "$DEST"
 # Note: we deliberately do NOT use -a (archive). The iPod is a FAT32 (vfat)
 # volume that cannot store Unix permissions or ownership, so preserving them
 # only produces errors.
-rsync -rtvh --progress \
-    --ignore-existing \
-    --modify-window=2 \
-    --exclude='.DS_Store' \
-    --exclude='._*' \
-    --exclude='.Trash-*' \
-    $DRY_RUN \
-    "$SRC"/ "$DEST"/
+for SRC in "${SRCS[@]}"; do
+    DEST_DIR="$DEST/$(basename "$SRC")"
+    echo ">>> Syncing: $SRC -> $DEST_DIR"
+    mkdir -p "$DEST_DIR"
+    rsync -rtvh --progress \
+        --ignore-existing \
+        --modify-window=2 \
+        --exclude='.DS_Store' \
+        --exclude='._*' \
+        --exclude='.Trash-*' \
+        $DRY_RUN \
+        "$SRC"/ "$DEST_DIR"/
+done
 
 echo
 echo ">>> Done. Existing iPod files were left untouched; only new files were copied."
