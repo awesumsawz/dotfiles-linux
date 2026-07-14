@@ -146,6 +146,14 @@ These cost real time in past runs — verify them before writing loops:
      a dangling trailing space where a `?` was dropped). Once accepted,
      persist that decision so it stops resurfacing (see step 5) — don't
      re-ask about the same album on a later scan.
+   - **Various Artists compilations** (standing decision, July 2026):
+     filenames are `## - Artist - Title.flac` (multi-disc:
+     `<disc>-## - Artist - Title.flac`), regenerated from each file's
+     ARTIST/TITLE tags with the usual sanitizer. The scanner still
+     expects title-only names, so these albums are recorded as accepted
+     exceptions after renaming — a new VA rip (abcde emits
+     `NN-Artist-Title.flac`) gets renamed to this format and accepted,
+     no need to re-ask.
    - **Quote artifacts** — doubled single quotes (`''Title''`) standing in
      for real punctuation. Check the actual official title (web search)
      before deciding whether real quotes belong there at all — some
@@ -193,8 +201,12 @@ These cost real time in past runs — verify them before writing loops:
    ```
    scripts/scan_state.sh "<library-root>" --accept "<album-relpath>"
    ```
-   `<album-relpath>` is exactly the path printed after `##ALBUM##`
-   (relative to the root). This records the album's current fingerprint
+   `<album-relpath>` is the path printed after `##ALBUM##` **with the
+   leading `./` stripped** (e.g. `Fats Waller/Fats and His Buddies`, not
+   `./Fats Waller/...`). The state file keys rows without the prefix, so
+   an accept given with `./` is stored but never matched on lookup — the
+   album keeps resurfacing and the bogus `./`-prefixed row has to be
+   pruned from the state TSV. This records the album's current fingerprint
    as clean, so `scan_state.sh` stops reporting it — until its `.flac`
    contents actually change again, at which point it's re-scanned fresh.
    `scripts/scan_state.sh "<library-root>" --list` shows everything
