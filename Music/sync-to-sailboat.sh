@@ -2,11 +2,10 @@
 #
 # sync-to-sailboat.sh
 #
-# Copies NEW files and directories from the "jason-library" and
-# "Library" folders to the attached "SAILBOAT" drive's Music folder. Files
-# that already exist on the drive are left exactly as they are — nothing is
-# overwritten and no duplicates are created. The source libraries are never
-# modified.
+# Mirrors the "Library" folder to the attached "SAILBOAT" drive's Music folder:
+# new files are copied over, and files that no longer exist locally are DELETED
+# from the drive. Files present on both sides are left exactly as they are —
+# nothing is overwritten. The source library is never modified.
 #
 # Usage:
 #   ./sync-to-sailboat.sh            # perform the sync
@@ -14,19 +13,25 @@
 #
 set -euo pipefail
 
-LIBRARIES=("jason-library" "Library")
+LIBRARIES=("Library")
 DEST_ROOT="/run/media/$USER/SAILBOAT/Music"
 
 DRY_RUN=""
 if [[ "${1:-}" == "--dry-run" || "${1:-}" == "-n" ]]; then
     DRY_RUN="--dry-run"
-    echo ">>> DRY RUN — no files will actually be copied."
+    echo ">>> DRY RUN — no files will actually be copied or deleted."
 fi
 
 # --- Sanity checks -----------------------------------------------------------
 for LIB in "${LIBRARIES[@]}"; do
     if [[ ! -d "$HOME/Music/$LIB" ]]; then
         echo "ERROR: source folder not found: $HOME/Music/$LIB" >&2
+        exit 1
+    fi
+    # With --delete, an empty source would wipe the drive's copy — refuse to run.
+    if [[ -z "$(ls -A "$HOME/Music/$LIB")" ]]; then
+        echo "ERROR: source folder is empty: $HOME/Music/$LIB — refusing to mirror it" >&2
+        echo "       (that would delete the entire '$LIB' copy on the drive)." >&2
         exit 1
     fi
 done
@@ -45,6 +50,9 @@ fi
 # --progress            per-file progress
 # --ignore-existing     skip any file already present on the drive (no overwrite,
 #                       no duplicates) — only genuinely new files are copied
+# --delete              remove files from the drive that no longer exist in the
+#                       local library (local copy is the source of truth);
+#                       excluded patterns below are protected from deletion
 # --modify-window=2     tolerate timestamp resolution quirks on exfat
 # --exclude             skip macOS/Rockbox junk files
 #
@@ -63,6 +71,7 @@ for LIB in "${LIBRARIES[@]}"; do
     rc=0
     rsync -rtvh --progress \
         --ignore-existing \
+        --delete \
         --modify-window=2 \
         --exclude='.DS_Store' \
         --exclude='._*' \
@@ -88,5 +97,5 @@ if [[ $WARNINGS -ne 0 ]]; then
     echo ">>> does not allow in filenames, such as \" ? : * < > |). Rename those files"
     echo ">>> in the source library and re-run to include them."
 else
-    echo ">>> Done. Existing SAILBOAT files were left untouched; only new files were copied."
+    echo ">>> Done. New files were copied and locally-deleted files were removed from SAILBOAT."
 fi

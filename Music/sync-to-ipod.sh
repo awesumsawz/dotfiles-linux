@@ -2,11 +2,10 @@
 #
 # sync-to-ipod.sh
 #
-# Copies NEW files and directories from the "jason-library" and "Library"
-# folders to matching subfolders of the attached iPod's Music folder
-# (Music/jason-library, Music/Library). Files that already exist on the iPod are left
-# exactly as they are — nothing is overwritten and no duplicates are created.
-# The source library is never modified.
+# Mirrors the "jason-library" folder to the attached iPod's Music/jason-library
+# folder: new files are copied over, and files that no longer exist locally are
+# DELETED from the iPod. Files present on both sides are left exactly as they
+# are — nothing is overwritten. The source library is never modified.
 #
 # Usage:
 #   ./sync-to-ipod.sh            # perform the sync
@@ -14,25 +13,27 @@
 #
 set -euo pipefail
 
-SRCS=(
-    "$HOME/Music/jason-library"
-    "$HOME/Music/Library"
-)
-DEST="/run/media/$USER/IPOD/Music"
+SRC="$HOME/Music/jason-library"
+DEST="/run/media/$USER/IPOD/Music/jason-library"
 
 DRY_RUN=""
 if [[ "${1:-}" == "--dry-run" || "${1:-}" == "-n" ]]; then
     DRY_RUN="--dry-run"
-    echo ">>> DRY RUN — no files will actually be copied."
+    echo ">>> DRY RUN — no files will actually be copied or deleted."
 fi
 
 # --- Sanity checks -----------------------------------------------------------
-for SRC in "${SRCS[@]}"; do
-    if [[ ! -d "$SRC" ]]; then
-        echo "ERROR: source folder not found: $SRC" >&2
-        exit 1
-    fi
-done
+if [[ ! -d "$SRC" ]]; then
+    echo "ERROR: source folder not found: $SRC" >&2
+    exit 1
+fi
+
+# With --delete, an empty source would wipe the iPod library — refuse to run.
+if [[ -z "$(ls -A "$SRC")" ]]; then
+    echo "ERROR: source folder is empty: $SRC — refusing to mirror it (that would" >&2
+    echo "       delete the entire library on the iPod)." >&2
+    exit 1
+fi
 
 if ! mountpoint -q "/run/media/$USER/IPOD"; then
     echo "ERROR: iPod does not appear to be mounted at /run/media/$USER/IPOD" >&2
@@ -48,25 +49,26 @@ fi
 # --progress            per-file progress
 # --ignore-existing     skip any file already present on the iPod (no overwrite,
 #                       no duplicates) — only genuinely new files are copied
+# --delete              remove files from the iPod that no longer exist in the
+#                       local library (local copy is the source of truth);
+#                       excluded patterns below are protected from deletion
 # --modify-window=2     tolerate the 2-second timestamp resolution of vfat/FAT32
 # --exclude             skip macOS/Rockbox junk files
 #
 # Note: we deliberately do NOT use -a (archive). The iPod is a FAT32 (vfat)
 # volume that cannot store Unix permissions or ownership, so preserving them
 # only produces errors.
-for SRC in "${SRCS[@]}"; do
-    DEST_DIR="$DEST/$(basename "$SRC")"
-    echo ">>> Syncing: $SRC -> $DEST_DIR"
-    mkdir -p "$DEST_DIR"
-    rsync -rtvh --progress \
-        --ignore-existing \
-        --modify-window=2 \
-        --exclude='.DS_Store' \
-        --exclude='._*' \
-        --exclude='.Trash-*' \
-        $DRY_RUN \
-        "$SRC"/ "$DEST_DIR"/
-done
+echo ">>> Syncing: $SRC -> $DEST"
+mkdir -p "$DEST"
+rsync -rtvh --progress \
+    --ignore-existing \
+    --delete \
+    --modify-window=2 \
+    --exclude='.DS_Store' \
+    --exclude='._*' \
+    --exclude='.Trash-*' \
+    $DRY_RUN \
+    "$SRC"/ "$DEST"/
 
 echo
-echo ">>> Done. Existing iPod files were left untouched; only new files were copied."
+echo ">>> Done. New files were copied and locally-deleted files were removed from the iPod."
