@@ -6,8 +6,10 @@ description: >
   follows the ## - title format", "confirm metadata matches for all
   albums", "fix the tags on this rip". Covers: filename/tag consistency
   checks across an artist or whole library, fixing garbled/duplicated
-  filenames from bad rips, fixing truncated or placeholder tags, and
-  bulk renaming. Not for streaming-service metadata or non-FLAC formats.
+  filenames from bad rips, fixing truncated or placeholder tags, bulk
+  renaming, and moving confirmed albums from a staging area into the
+  canonical ~/Music/Library. Not for streaming-service metadata or
+  non-FLAC formats.
 ---
 
 # FLAC Library Audit
@@ -224,6 +226,46 @@ These cost real time in past runs — verify them before writing loops:
    worked (the album should now come back clean and auto-record itself)
    before moving to the next one.
 
+8. **Move confirmed albums into the canonical library.** The canonical
+   library is `~/Music/Library/<Artist>/<Album>`; new rips get audited in
+   a staging area (e.g. `~/Music/tmp`, where abcde drops them). Once an
+   album scans clean — or has been explicitly `--accept`ed — move it in:
+   ```
+   scripts/move_to_library.sh "<album-dir>"            # after eyeballing:
+   scripts/move_to_library.sh "<album-dir>" --dry-run  # ...this first
+   ```
+   Artist comes from the album dir's parent directory name; pass
+   `--artist "<name>"` when the album isn't nested under an artist dir,
+   and `--library <root>` to target somewhere other than
+   `~/Music/Library`. The script refuses to move a dir with no `.flac`
+   files, names still containing forbidden characters, or onto an
+   existing destination album — it never merges or overwrites, so a
+   deliberate re-rip replacement means removing the old Library copy
+   yourself first. It also tidies away the staging artist dir if the move
+   emptied it.
+
+   **Standing policy (confirmed 2026-07-16): staging should end up empty
+   after a session, except explicit exclusions.** At the end of a session,
+   sweep the whole staging root (`find <root> -mindepth 2 -maxdepth 2
+   -type d`) and move every album that scans clean or is `--accept`ed —
+   not just the ones touched this session. Skip only two kinds of album:
+   one still flagged with unresolved issues (verify with `scan_state.sh`
+   first — don't move something merely because it looks fixed), and one
+   the user has explicitly told you to leave in staging (e.g. an
+   unidentified rip with placeholder tags awaiting manual identification —
+   track these by name so they don't get swept by accident). A stray
+   half-fixed album from an earlier session is exactly what the pre-move
+   `scan_state.sh` check is for: it'll show up flagged and get skipped
+   automatically, so it's safe to sweep broadly rather than hand-picking
+   individual dirs.
+
+   State bookkeeping after a move: the album's rows under the *staging*
+   root's state become harmless orphans, and the album shows up as "new"
+   under the Library root — so re-run `scan_state.sh ~/Music/Library`
+   after a batch of moves to record everything clean in its new home.
+   Accepted exceptions (e.g. Various Artists naming) do NOT carry across
+   roots: re-issue `--accept` with the album's new Library-relative path.
+
 ## Reference: setting tags with metaflac
 
 ```sh
@@ -259,6 +301,7 @@ into an interactive zsh shell — see gotcha #1 above).
 | `fix_tag_whitespace.sh <album-dir>` | Strips leading/trailing/doubled whitespace from TITLE/ALBUM/ARTIST tags. |
 | `fix_tracknumber_format.sh <album-dir>` | Splits combined `TRACKNUMBER=N/total` / `DISCNUMBER=N/total` into separate total tags, and zero-pads a plain unpadded `TRACKNUMBER` (`1` → `01`). |
 | `consolidate_multidisc.sh <album-dir>` | Merges `CD N`/`Disc N` subdirectories (or an already-flat continuously-numbered folder) into one directory with `<disc>-<track> - Title.flac` filenames; corrects `DISCNUMBER`/`DISCTOTAL` tags to match. |
+| `move_to_library.sh <album-dir> [--library <root>] [--artist <name>] [--dry-run]` | Moves a confirmed album from staging into `~/Music/Library/<Artist>/<Album>` (artist from the parent dir name). Refuses empty/forbidden-char/colliding moves; never merges. |
 
 State files (used only by `scan_state.sh`) live in `state/`, one per
 library root, named by a sha1 of that root's absolute path. Safe to
